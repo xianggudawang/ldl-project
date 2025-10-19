@@ -54,7 +54,62 @@
 全栈监控仪表板 - 系统和应用综合监控
 
 
-五、!!!!!注意!!!!!
+五、项目结构
+ldl-project/
+├── ansible
+│   ├── app
+│   │   ├── app.py
+│   │   ├── Dockerfile
+│   │   └── requirements.txt
+│   ├── grafana
+│   │   └── provisioning
+│   │       ├── dashboards
+│   │       │   ├── dashboard.yml
+│   │       │   └── full-stack-monitoring.json
+│   │       └── datasources
+│   │           └── datasource.yml
+│   ├── group_vars
+│   │   ├── all.yml
+│   │   └── web.yml
+│   ├── inventory
+│   ├── playbooks
+│   │   └── deploy-stack.yml
+│   ├── roles
+│   │   ├── app
+│   │   │   ├── tasks
+│   │   │   │   └── main.yml
+│   │   │   └── templates
+│   │   │       └── docker-compose-app.j2
+│   │   ├── common
+│   │   │   ├── tasks
+│   │   │   │   └── main.yml
+│   │   │   └── templates
+│   │   ├── grafana
+│   │   │   ├── tasks
+│   │   │   │   └── main.yml
+│   │   │   └── templates
+│   │   │       └── docker-compose-grafana.j2
+│   │   ├── nginx
+│   │   │   ├── tasks
+│   │   │   │   └── main.yml
+│   │   │   └── templates
+│   │   │       ├── docker-compose-nginx.j2
+│   │   │       └── nginx.conf.j2
+│   │   ├── postgres
+│   │   │   ├── tasks
+│   │   │   │   └── main.yml
+│   │   │   └── templates
+│   │   │       └── docker-compose-postgres.j2
+│   │   └── prometheus
+│   │       ├── tasks
+│   │       │   └── main.yml
+│   │       └── templates
+│   │           ├── docker-compose-prometheus.j2
+│   │           └── prometheus.yml.j2
+│   └── site.yml
+└── README.md
+
+六、!!!!!注意!!!!!
 在生产环境部署前，请务必：
 
 修改所有默认密码
@@ -65,5 +120,5 @@
 
 进行安全扫描和渗透测试
 
-最后感谢您使用本项目！！
+最后感谢您使用本项目[鞠躬][鞠躬]
 
