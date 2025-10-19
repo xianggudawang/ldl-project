@@ -1,0 +1,24 @@
+---
+- name: 上传应用代码
+  copy:
+    src: "../../../app/"
+    dest: "/data/{{project_name}}/app"
+    mode: '0755'
+
+- name: 创建应用 docker compose配置
+  template:
+    src: docker-compose-app.j2
+    dest: "/data/{{project_name}}/docker-compose-app.yml"
+
+- name: 构建并启动服务
+  command: docker-compose -f docker-compose-app.yml up -d --build
+  args:
+    chdir: "/data/{{project_name}}"
+
+      #- name: 等待应用启动
+      # wait_for: 
+      #  host: localhost
+      # port: "{{app_port}}"
+      # timeout: 30
+
+

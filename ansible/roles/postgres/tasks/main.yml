@@ -1,0 +1,24 @@
+---
+- name: 创建pg数据库目录
+  file:
+    path: "/data/{{project_name}}/postgres_data"
+    state: directory
+
+- name: 复制pg docker compose配置
+  template:
+    src: docker-compose-postgres.j2
+    dest: "/data/{{project_name}}/docker-compose-postgres.yml"
+
+- name: 启动pg服务
+  command: docker-compose -f docker-compose-postgres.yml up -d
+  args:
+    chdir: "/data/{{project_name}}"
+
+- name: 等待pg启动完成
+  wait_for:
+    host: localhost
+    port: "{{postgres_port}}"
+    timeout: 30
+
+
+

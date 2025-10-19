@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  app:
+  #  container_name: app
+    build: ./app
+    environment:
+      - DATABASE_URL=postgresql://{{ postgres_user }}:{{ postgres_password }}@{{ db_host }}:{{ postgres_port }}/{{ postgres_db }}
+    ports:
+      - "5555:5555"
+    networks:
+      - {{ docker_network }}
+    restart: unless-stopped
+    deploy:
+      replicas: {{ app_replicas_per_node }}
+    depends_on: 
+      - postgres
+networks:
+  {{ docker_network }}:
+    driver: bridge
+

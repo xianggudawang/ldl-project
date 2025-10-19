@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "{{ prometheus_port }}:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - {{ docker_network }}
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    networks:
+      - {{ docker_network }}
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:
+
+networks:
+  {{ docker_network }}:
+    driver: bridge

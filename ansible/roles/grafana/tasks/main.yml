@@ -1,0 +1,35 @@
+---
+- name: 创建 Grafana 配置目录
+  file:
+    path: "/data/{{ project_name }}/grafana/provisioning/datasources"
+    state: directory
+    recurse: yes
+
+- name: 创建 Grafana 仪表板目录
+  file:
+    path: "/data/{{ project_name }}/grafana/provisioning/dashboards"
+    state: directory
+    recurse: yes
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: 复制 Grafana 数据源配置
+  copy:
+    src: "../../../grafana/provisioning/datasources/datasource.yml"
+    dest: "/data/{{ project_name }}/grafana/provisioning/datasource.yml"
+
+- name: 复制 Grafana 仪表板配置和JSON文件
+  copy:
+    src: "../../../grafana/provisioning/dashboards/"
+    dest: "/data/{{ project_name }}/grafana/provisioning/dashboards/"
+
+- name: 创建 Grafana Docker Compose 配置
+  template:
+    src: docker-compose-grafana.j2
+    dest: "/data/{{ project_name }}/docker-compose-grafana.yml"
+
+- name: 启动 Grafana 服务
+  command: docker-compose -f docker-compose-grafana.yml up -d
+  args:
+    chdir: "/data/{{ project_name }}"

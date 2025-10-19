@@ -1,0 +1,22 @@
+---
+- name: 创建 prometheus配置目录
+  file:
+    path: "/data/{{project_name}}/prometheus"
+    state: directory
+
+- name: 复制 prometheus配置文件
+  template:
+    src: prometheus.yml.j2
+    dest: "/data/{{project_name}}/prometheus/prometheus.yml"
+
+- name: 创建 prometheus docker compose配置
+  template:
+    src: docker-compose-prometheus.j2
+    dest: "/data/{{project_name}}/docker-compose-prometheus.yml"
+
+- name: 启动 prometheus服务
+  command: docker-compose -f docker-compose-prometheus.yml
+  args:
+    chdir: "/data/{{project_name}}"
+
+

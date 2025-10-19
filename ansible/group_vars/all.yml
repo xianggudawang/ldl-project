@@ -1,0 +1,25 @@
+#全局变量
+project_name: ldl-project
+docker_network: ldl-network
+
+#数据库配置
+postgres_db: pg
+postgres_user: ldl
+postgres_password: 942624
+postgres_port: 5432
+
+# 应用配置
+app_port: 5555
+app_replicas_per_node: 1   #每个web节点的应用实例数量
+
+# grafana配置
+
+grafana_admin_user: admin
+grafana_admin_password: 942624
+grafana_port: 3000
+
+# Prometheus配置
+prometheus_port: 9090
+
+# Nginx配置
+nginx_port: 1800

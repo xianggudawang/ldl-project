@@ -1,0 +1,45 @@
+apiVersion: 1
+
+# 数据源列表
+datasources:
+  # 主要 Prometheus 数据源
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: true
+    
+    # 基本认证
+    basicAuth: false
+    
+    # 指标查询设置
+    jsonData:
+      timeInterval: 15s
+      queryTimeout: 60s
+      httpMethod: POST
+      manageAlerts: true
+      customQueryParameters: ""
+
+    # 安全设置
+    secureJsonData: {}
+    
+    # 版本（Grafana 8+）
+    version: 1
+
+  # 添加 PostgreSQL 数据源用于直接查询数据库
+  - name: PostgreSQL
+    type: postgres
+    access: proxy
+    url: postgres:5432
+    database: pg
+    user: ldl
+    secureJsonData:
+      password: "942624"
+    isDefault: false
+    editable: true
+    jsonData:
+      sslmode: "disable"
+      maxOpenConns: 100
+      maxIdleConns: 100
+      connMaxLifetime: 14400

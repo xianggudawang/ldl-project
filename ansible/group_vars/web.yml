@@ -1,0 +1,3 @@
+#web节点专用变量
+web_node_ip: "{{ansible_host}}"
+db_host: "{{groups['db_monitor'][0] }}" #使用第一个db_monitor节点

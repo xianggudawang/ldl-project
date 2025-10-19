@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_USER={{ grafana_admin_user }}
+      - GF_SECURITY_ADMIN_PASSWORD={{ grafana_admin_password }}
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+      - GF_PLUGIN_URL=https://grafana.mirrors.ustc.edu.cn/
+    ports:
+      - "{{ grafana_port }}:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana
+    networks:
+      - {{ docker_network }}
+    restart: unless-stopped
+
+volumes:
+  grafana_data:
+
+networks:
+  {{ docker_network }}:
+    driver: bridge

@@ -1,0 +1,22 @@
+global:
+  scrape_interval: 15s
+
+#遍历web组中的所有节点
+scrape_configs:
+  - job_name: 'python-app'
+    static_configs:
+      {% for host in groups['web'] %}
+      - targets: ['{{ host }}:{{ app_port }}']
+      {% endfor %}
+    metrics_path: /metrics
+
+#监控web组和数据库组的系统指标
+  - job_name: 'node-exporter'
+    static_configs:
+      {% for host in groups['db_monitor'] + groups['web'] %}
+      - targets: ['{{ host }}:9100']
+      {% endfor %}
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
