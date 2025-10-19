@@ -54,7 +54,17 @@
 全栈监控仪表板 - 系统和应用综合监控
 
 
-五、项目结构
+五、使用方式
+前提：需要在控制机安装ansible
+# 完整部署
+ansible-playbook -i ansible/inventory ansible/site.yml
+
+# 分阶段部署
+ansible-playbook -i ansible/inventory ansible/site.yml --tags common #基础环境
+ansible-playbook -i ansible/inventory ansible/site.yml --tags db_monitor #数据库、监控节点
+ansible-playbook -i ansible/inventory ansible/site.yml --tags web  #web节点
+
+六、项目结构
 ldl-project/
 ├── ansible
 │   ├── app
@@ -109,7 +119,7 @@ ldl-project/
 │   └── site.yml
 └── README.md
 
-六、!!!!!注意!!!!!
+七、!!!!!注意!!!!!
 在生产环境部署前，请务必：
 
 修改所有默认密码
@@ -120,5 +130,5 @@ ldl-project/
 
 进行安全扫描和渗透测试
 
-最后感谢您使用本项目[鞠躬][鞠躬]
+最后感谢您使用本项目!![鞠躬][鞠躬]
 
